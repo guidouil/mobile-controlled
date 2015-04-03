@@ -1,0 +1,63 @@
+<head>
+  <title>mobile-controlled</title>
+</head>
+
+<template name="layout">
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          {{> yield}}
+        </div>
+      </div>
+    </div>
+          {{> footer}}
+  </body>
+</template>
+
+
+<template name="Home">
+  <h1>Welcome to Mobile Controlled POC!</h1>
+  {{#if direction stateId}}
+  <div class="well well-sm">
+    <p class="lead">The direction is : <strong>{{direction stateId}}</strong> <i class="glyphicon glyphicon-arrow-{{direction stateId}}"></i></p>
+  </div>
+  {{/if}}
+  <p>
+    Go to this URL with your mobile phone <a href="{{pathFor 'MobileControl' _id=stateId}}" target="_blank">{{absoluteUrl stateId}}</a>
+  </p>
+  <p>
+    Or flash this QR code
+  </p>
+  <div id="qrcode"></div>
+</template>
+
+<template name="MobileControl">
+  <h1 class="text-center">Move it !</h1>
+  <div class="col-xs-12">
+    <button type="button" class="btn btn-lg  btn-default btn-block btn-success" data-action="up">
+      <i class="glyphicon glyphicon-arrow-up"></i>
+    </button>
+  </div>
+  <div class="col-xs-6">
+    <button type="button" class="btn btn-lg  btn-default btn-block btn-warning" data-action="left">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+    </button>
+  </div>
+  <div class="col-xs-6">
+    <button type="button" class="btn btn-lg  btn-default btn-block btn-info" data-action="right">
+      <i class="glyphicon glyphicon-arrow-right"></i>
+    </button>
+  </div>
+  <div class="col-xs-12">
+    <button type="button" class="btn btn-lg  btn-default btn-block btn-primary" data-action="down">
+      <i class="glyphicon glyphicon-arrow-down"></i>
+    </button>
+  </div>
+</template>
+
+<template name="footer">
+  <footer>
+    <p class="text-center text-muted">Fork me on <a href="https://github.com/guidouil/mobile-controlled">GitHub</a></p>
+    </footer>
+</template>

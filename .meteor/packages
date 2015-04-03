@@ -10,3 +10,4 @@ iron:router
 twbs:bootstrap
 random
 steeve:jquery-qrcode
+fortawesome:fontawesome

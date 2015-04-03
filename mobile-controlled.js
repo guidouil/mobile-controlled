@@ -43,13 +43,10 @@ if (Meteor.isClient) {
       return Meteor.absoluteUrl('m/'+stateId);
     },
     direction: function (stateId) {
-      Session.setDefault('direction', 'up');
       var state = States.findOne({_id: stateId});
       if (state && state.direction) {
-        Session.set('direction', state.direction);
         return state.direction;
       }
-      return Session.get('direction');
     }
   });
 

@@ -23,8 +23,9 @@
     <p class="lead">The direction is : <strong>{{direction stateId}}</strong> <i class="fa fa-arrow-{{direction stateId}}"></i></p>
   </div>
   {{/if}}
-  <p class="lead">Go to this URL with your mobile phone <a href="{{pathFor 'MobileControl' _id=stateId}}" target="_blank">{{absoluteUrl stateId}}</a> <small>(you use another browser window)</small></p>
-  <p>
+  <p class="lead">Go to this URL with your mobile phone <a href="{{pathFor 'MobileControl' _id=stateId}}" target="_blank">{{absoluteUrl stateId}}</a> <small>
+    <br>you may use another browser window but make sure both are visible</small></p>
+  <p class="lead">
     Or flash this QR code
   </p>
   <div id="qrcode"></div>

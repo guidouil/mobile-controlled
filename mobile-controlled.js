@@ -22,7 +22,7 @@ Router.route('/', function () {
 
 Router.route('/m/:_id', {
   name: 'MobileControl',
-  subscribe: function (){
+  subscriptions: function (){
     return Meteor.subscribe('States', this.params._id);
   },
   action: function () {
@@ -43,10 +43,13 @@ if (Meteor.isClient) {
       return Meteor.absoluteUrl('m/'+stateId);
     },
     direction: function (stateId) {
+      Session.setDefault('direction', 'up');
       var state = States.findOne({_id: stateId});
       if (state && state.direction) {
+        Session.set('direction', state.direction);
         return state.direction;
       }
+      return Session.get('direction');
     }
   });
 
@@ -59,26 +62,18 @@ if (Meteor.isClient) {
   };
 
   Template.MobileControl.events({
-    "click [data-action=left]": function(evt, tmpl){
+    "click button": function(evt, tmpl){
       evt.preventDefault();
       var stateId = Iron.controller().getParams()._id;
-      Meteor.call('stateUpsert',stateId, {direction: 'left'});
-    },
-    "click [data-action=right]": function(evt, tmpl){
-      evt.preventDefault();
-      var stateId = Iron.controller().getParams()._id;
-      Meteor.call('stateUpsert',stateId, {direction: 'right'});
-
-    },
-    "click [data-action=up]": function(evt, tmpl){
-      evt.preventDefault();
-      var stateId = Iron.controller().getParams()._id;
-      Meteor.call('stateUpsert',stateId, {direction: 'up'});
-    },
-    "click [data-action=down]": function(evt, tmpl){
-      evt.preventDefault();
-      var stateId = Iron.controller().getParams()._id;
-      Meteor.call('stateUpsert',stateId, {direction: 'down'});
+      // Meteor.subscribe('States', stateId);
+      var direction = $(evt.currentTarget).val();
+      var state = States.findOne({_id: stateId});
+      console.log(state);
+      if (state === undefined) {
+        States.insert({_id: stateId, direction: direction});
+      } else {
+        States.update({_id: stateId}, {$set: {direction: direction}});
+      }
     }
   });
 }
@@ -91,8 +86,6 @@ if (Meteor.isServer) {
     return States.find({_id: stateId});
   });
   Meteor.methods({
-  stateUpsert: function( id, doc ){
-     States.upsert( id, doc );
-    }
+
   });
 }

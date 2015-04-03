@@ -65,10 +65,8 @@ if (Meteor.isClient) {
     "click button": function(evt, tmpl){
       evt.preventDefault();
       var stateId = Iron.controller().getParams()._id;
-      // Meteor.subscribe('States', stateId);
       var direction = $(evt.currentTarget).val();
       var state = States.findOne({_id: stateId});
-      console.log(state);
       if (state === undefined) {
         States.insert({_id: stateId, direction: direction});
       } else {

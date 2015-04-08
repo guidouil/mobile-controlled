@@ -55,4 +55,42 @@
       </button>
     </div>
   </div>
+  <div class="col-xs-12 text-center">
+    <br>
+    <br>
+    <br>
+    <br>
+    <a href="{{pathFor 'orientation'}}" class="btn btn-danger btn-lg">
+      <i class="fa fa-html5 fa-5x"></i>
+    </a>
+  </div>
+
+</template>
+
+<template name="Orientation">
+  <div class="well well-sm">
+    <h2>Device Orientation</h2>
+    <table>
+      <tr>
+        <td>Event Supported</td>
+        <td id="doEvent"></td>
+      </tr>
+      <tr>
+        <td>Tilt Left/Right [gamma]</td>
+        <td id="doTiltLR"></td>
+      </tr>
+      <tr>
+        <td>Tilt Front/Back [beta]</td>
+        <td id="doTiltFB"></td>
+      </tr>
+      <tr>
+        <td>Direction [alpha]</td>
+        <td id="doDirection"></td>
+      </tr>
+     </table>
+  </div>
+
+  <div class="container" style="perspective: 300;">
+    <img src="html5_logo.png" id="imgLogo" class="logo">
+  </div>
 </template>

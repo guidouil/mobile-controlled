@@ -78,6 +78,7 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
   Meteor.publish('States', function (stateId) {
+    check(stateId, String);
     return States.find({_id: stateId});
   });
   Meteor.methods({

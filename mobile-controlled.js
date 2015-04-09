@@ -140,6 +140,9 @@ if (Meteor.isClient) {
 } // end client
 
 if (Meteor.isServer) {
+  Meteor.startup(function () {
+    Kadira.connect('xpZ4yAoMrrgZe72ib', 'bfef51f1-200a-485f-ab0c-5ba6a9f00fd7');
+  });
   Meteor.publish('States', function (stateId) {
     check(stateId, String);
     return States.find({_id: stateId});

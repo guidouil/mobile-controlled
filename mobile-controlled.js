@@ -143,7 +143,9 @@ if (Meteor.isClient) {
       if (state === undefined) {
         States.insert({_id: stateId, 'tiltLR': tiltLR, 'tiltFB': tiltFB, 'dir': dir});
       } else {
-        States.update({_id: stateId}, {$set: {'tiltLR': tiltLR, 'tiltFB': tiltFB, 'dir': dir}});
+        if (state.tiltLR !== Math.round(tiltLR) || state.tiltFB !== Math.round(tiltFB) || state.dir !== Math.round(dir) ) {
+          States.update({_id: stateId}, {$set: {'tiltLR': Math.round(tiltLR), 'tiltFB': Math.round(tiltFB), 'dir': Math.round(dir)}});
+        }
 
       }
     }

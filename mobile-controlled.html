@@ -1,5 +1,5 @@
 <head>
-  <title>mobile-controller</title>
+  <title>MeteoRemote</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 </head>
 
@@ -17,7 +17,7 @@
 
 <template name="Home">
   <a href="https://github.com/guidouil/mobile-controlled"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
-  <h1>Welcome to the Mobile Controller Meteor Demo!</h1>
+  <h1>MeteoRemote <small>a <a href="http://meteor.com">Meteor</a> based gyroscopic remote</small></h1>
   {{#if direction stateId}}
   <div class="alert alert-info">
     <p class="lead">The direction is : <strong>{{direction stateId}}</strong> <i class="fa fa-arrow-{{direction stateId}}"></i></p>
@@ -28,17 +28,19 @@
   </p>
   <div id="qrcode"></div>
   <p class="lead">Or go to this URL <a href="{{pathFor 'MobileControl' _id=stateId}}" target="_blank">{{absoluteUrl stateId}}</a> with your phone</p>
-  <hr>
   <div class="container" style="perspective: 300;">
     <p class="text-center">
       <img src="/html5_logo.png" id="imgLogo" class="img-responsive">
     </p>
   </div>
   {{orientation stateId}}
+  <p class="text-center text-muted">
+    Some source copied from <a href="http://www.html5rocks.com/en/tutorials/device/orientation/" class="watermark">HTML5Rocks</a>
+  </p>
 </template>
 
 <template name="MobileControl">
-  <h1 class="text-center">Basic direction remote</h1>
+  <h1 class="text-center">MeteoRemote</h1>
   <div class="row">
     <div class="col-xs-12">
       <button type="button" class="btn btn-lg  btn-default btn-block btn-success" value="up">
@@ -61,43 +63,33 @@
       </button>
     </div>
   </div>
-  <div class="col-xs-12 text-center">
-    <h1 class="text-center">Gyroscope remote</h1>
-    <a href="{{pathFor 'Orientation' _id=stateId}}" class="btn btn-danger btn-lg">
-      <i class="fa fa-html5 fa-5x"></i>
-    </a>
+  <div class="col-xs-12">
+    <div class="container text-center" style="perspective: 300;">
+      <img src="/html5_logo.png" id="imgLogo" class="img-responsive">
+    </div>
+    <div class="well well-sm">
+      <h2>Device Orientation</h2>
+      <table>
+        <tr>
+          <td>Event Supported</td>
+          <td id="doEvent"></td>
+        </tr>
+        <tr>
+          <td>Tilt Left/Right [gamma]</td>
+          <td id="doTiltLR"></td>
+        </tr>
+        <tr>
+          <td>Tilt Front/Back [beta]</td>
+          <td id="doTiltFB"></td>
+        </tr>
+        <tr>
+          <td>Direction [alpha]</td>
+          <td id="doDirection"></td>
+        </tr>
+       </table>
+    </div>
+    <p class="text-center text-muted">
+      Some source copied from <a href="http://www.html5rocks.com/en/tutorials/device/orientation/" class="watermark">HTML5Rocks</a>
+    </p>
   </div>
-
-</template>
-
-<template name="Orientation">
-  <div class="well well-sm">
-    <h2>Device Orientation</h2>
-    <table>
-      <tr>
-        <td>Event Supported</td>
-        <td id="doEvent"></td>
-      </tr>
-      <tr>
-        <td>Tilt Left/Right [gamma]</td>
-        <td id="doTiltLR"></td>
-      </tr>
-      <tr>
-        <td>Tilt Front/Back [beta]</td>
-        <td id="doTiltFB"></td>
-      </tr>
-      <tr>
-        <td>Direction [alpha]</td>
-        <td id="doDirection"></td>
-      </tr>
-     </table>
-  </div>
-
-  <div class="container" style="perspective: 300;">
-    <img src="/html5_logo.png" id="imgLogo" class="img-responsive">
-  </div>
-
-  <p class="text-center">
-    Source <a href="http://www.html5rocks.com/en/tutorials/device/orientation/" class="watermark">HTML5 Rocks</a>
-  </p>
 </template>

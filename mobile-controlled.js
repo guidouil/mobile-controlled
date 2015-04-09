@@ -1,4 +1,5 @@
 States = new Meteor.Collection('states');
+
 States.allow({
   insert: function () {
     return true;
@@ -22,16 +23,6 @@ Router.route('/', function () {
 
 Router.route('/m/:_id', {
   name: 'MobileControl',
-  subscriptions: function (){
-    return Meteor.subscribe('States', this.params._id);
-  },
-  action: function () {
-    this.render();
-  }
-});
-
-Router.route('/orientation/:_id', {
-  name: 'Orientation',
   subscriptions: function (){
     return Meteor.subscribe('States', this.params._id);
   },
@@ -98,8 +89,8 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.Orientation.rendered = function(){
-    // Taken from http://www.html5rocks.com/en/tutorials/device/orientation/ and adapted
+  Template.MobileControl.rendered = function(){
+    // Copied from http://www.html5rocks.com/en/tutorials/device/orientation/ and adapted
     init();
     var count = 0;
     var stateId = Iron.controller().getParams()._id;
@@ -149,14 +140,8 @@ if (Meteor.isClient) {
 } // end client
 
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
   Meteor.publish('States', function (stateId) {
     check(stateId, String);
     return States.find({_id: stateId});
-  });
-  Meteor.methods({
-
   });
 }

@@ -99,6 +99,7 @@ if (Meteor.isClient) {
   });
 
   Template.Orientation.rendered = function(){
+    // Taken from http://www.html5rocks.com/en/tutorials/device/orientation/ and adapted
     init();
     var count = 0;
     var stateId = Iron.controller().getParams()._id;
@@ -110,20 +111,16 @@ if (Meteor.isClient) {
         window.addEventListener('deviceorientation', function(eventData) {
           // gamma is the left-to-right tilt in degrees, where right is positive
           var tiltLR = eventData.gamma;
-
           // beta is the front-to-back tilt in degrees, where front is positive
           var tiltFB = eventData.beta;
-
           // alpha is the compass direction the device is facing in degrees
-          var dir = eventData.alpha
-
+          var dir = eventData.alpha;
           // call our orientation event handler
           deviceOrientationHandler(tiltLR, tiltFB, dir);
           }, false);
 
-
       } else {
-        document.getElementById("doEvent").innerHTML = "Not supported on your device or browser.  Sorry."
+        document.getElementById("doEvent").innerHTML = "Not supported on your device or browser.  Sorry.";
       }
     }
 
@@ -138,7 +135,6 @@ if (Meteor.isClient) {
       logo.style.MozTransform = "rotate("+ tiltLR +"deg)";
       logo.style.transform = "rotate("+ tiltLR +"deg) rotate3d(1,0,0, "+ (tiltFB*-1)+"deg)";
 
-
       var state = States.findOne({_id: stateId});
       if (state === undefined) {
         States.insert({_id: stateId, 'tiltLR': tiltLR, 'tiltFB': tiltFB, 'dir': dir});
@@ -146,14 +142,8 @@ if (Meteor.isClient) {
         if (state.tiltLR !== Math.round(tiltLR) || state.tiltFB !== Math.round(tiltFB) || state.dir !== Math.round(dir) ) {
           States.update({_id: stateId}, {$set: {'tiltLR': Math.round(tiltLR), 'tiltFB': Math.round(tiltFB), 'dir': Math.round(dir)}});
         }
-
       }
     }
-
-
-    // Some other fun rotations to try...
-    //var rotation = "rotate3d(0,1,0, "+ (tiltLR*-1)+"deg) rotate3d(1,0,0, "+ (tiltFB*-1)+"deg)";
-    //var rotation = "rotate("+ tiltLR +"deg) rotate3d(0,1,0, "+ (tiltLR*-1)+"deg) rotate3d(1,0,0, "+ (tiltFB*-1)+"deg)";
   };
 
 } // end client

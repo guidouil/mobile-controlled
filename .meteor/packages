@@ -11,5 +11,4 @@ twbs:bootstrap
 random
 steeve:jquery-qrcode
 fortawesome:fontawesome
-device-orientation
 fastclick

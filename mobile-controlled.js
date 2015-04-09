@@ -30,8 +30,14 @@ Router.route('/m/:_id', {
   }
 });
 
-Router.route('/orientation', function () {
-  this.render('Orientation');
+Router.route('/orientation/:_id', {
+  name: 'Orientation',
+  subscriptions: function (){
+    return Meteor.subscribe('States', this.params._id);
+  },
+  action: function () {
+    this.render();
+  }
 });
 
 if (Meteor.isClient) {
@@ -51,6 +57,16 @@ if (Meteor.isClient) {
       if (state && state.direction) {
         return state.direction;
       }
+    },
+    orientation: function (stateId) {
+      var state = States.findOne({_id: stateId});
+      if (state && state.tiltLR && state.tiltFB && state.dir) {
+        var logo = document.getElementById("imgLogo");
+        logo.style.webkitTransform = "rotate("+ state.tiltLR +"deg) rotate3d(1,0,0, "+ (state.tiltFB*-1)+"deg)";
+        logo.style.MozTransform = "rotate("+ state.tiltLR +"deg)";
+        logo.style.transform = "rotate("+ state.tiltLR +"deg) rotate3d(1,0,0, "+ (state.tiltFB*-1)+"deg)";
+        console.log(state.tiltLR);
+      }
     }
   });
 
@@ -61,6 +77,12 @@ if (Meteor.isClient) {
       $('#qrcode').qrcode({text: url});
     }
   };
+
+  Template.MobileControl.helpers({
+    stateId: function(){
+      return Iron.controller().getParams()._id;
+    }
+  });
 
   Template.MobileControl.events({
     "click button": function(evt, tmpl){
@@ -79,6 +101,7 @@ if (Meteor.isClient) {
   Template.Orientation.rendered = function(){
     init();
     var count = 0;
+    var stateId = Iron.controller().getParams()._id;
 
     function init() {
       if (window.DeviceOrientationEvent) {
@@ -97,6 +120,8 @@ if (Meteor.isClient) {
           // call our orientation event handler
           deviceOrientationHandler(tiltLR, tiltFB, dir);
           }, false);
+
+
       } else {
         document.getElementById("doEvent").innerHTML = "Not supported on your device or browser.  Sorry."
       }
@@ -112,6 +137,15 @@ if (Meteor.isClient) {
       logo.style.webkitTransform = "rotate("+ tiltLR +"deg) rotate3d(1,0,0, "+ (tiltFB*-1)+"deg)";
       logo.style.MozTransform = "rotate("+ tiltLR +"deg)";
       logo.style.transform = "rotate("+ tiltLR +"deg) rotate3d(1,0,0, "+ (tiltFB*-1)+"deg)";
+
+
+      var state = States.findOne({_id: stateId});
+      if (state === undefined) {
+        States.insert({_id: stateId, 'tiltLR': tiltLR, 'tiltFB': tiltFB, 'dir': dir});
+      } else {
+        States.update({_id: stateId}, {$set: {'tiltLR': tiltLR, 'tiltFB': tiltFB, 'dir': dir}});
+
+      }
     }
 
 

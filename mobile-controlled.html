@@ -5,7 +5,6 @@
 
 <template name="layout">
   <body>
-    <a href="https://github.com/guidouil/mobile-controlled"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
@@ -17,6 +16,7 @@
 </template>
 
 <template name="Home">
+  <a href="https://github.com/guidouil/mobile-controlled"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:9999;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
   <h1>Welcome to Mobile Controlled Demo!</h1>
   {{#if direction stateId}}
   <div class="alert alert-info">
@@ -29,6 +29,11 @@
     Or flash this QR code
   </p>
   <div id="qrcode"></div>
+  <hr>
+  <div class="container text-center" style="perspective: 300;">
+    <img src="/html5_logo.png" id="imgLogo" class="img-responsive">
+  </div>
+  {{orientation stateId}}
 </template>
 
 <template name="MobileControl">
@@ -60,7 +65,7 @@
     <br>
     <br>
     <br>
-    <a href="{{pathFor 'orientation'}}" class="btn btn-danger btn-lg">
+    <a href="{{pathFor 'Orientation' _id=stateId}}" class="btn btn-danger btn-lg">
       <i class="fa fa-html5 fa-5x"></i>
     </a>
   </div>

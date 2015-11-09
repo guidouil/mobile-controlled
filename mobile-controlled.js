@@ -1,4 +1,4 @@
-States = new Meteor.Collection('states');
+States = new Mongo.Collection('states');
 
 States.allow({
   insert: function () {
